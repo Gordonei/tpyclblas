@@ -67,7 +67,10 @@ cdef sgemmcwrapper(order,transA,transB,size_t M,size_t N,size_t K,cl_float alpha
 
 	return result
 
-def sgemvcwrapper(clblasOrder order,clblasTranspose transA,size_t M,size_t N,cl_float alpha,A,size_t offA,size_t lda,x,size_t offx,int incx,cl_float beta,y,size_t offy,int incy,cl_uint numCommandQueues,commandQueues):
+def sgemvwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues):
+	return sgemvwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues)
+
+cdef sgemvcwrapper(order,transA,size_t M,size_t N,cl_float alpha,A,size_t offA,size_t lda,x,size_t offx,int incx,cl_float beta,y,size_t offy,int incy,cl_uint numCommandQueues,commandQueues):
 	cdef clblasOrder blasorder = clblasRowMajor
 	
 	cdef clblasTranspose transposeA = clblasNoTrans
