@@ -28,6 +28,6 @@ setup(
     author_email = "gordon.inggs@gmail.com",
     
     cmdclass = {'build_ext': build_ext},
-    ext_modules = [Extension("tpyclblas", sources=["tpyclblas.pyx"])]
+    ext_modules = [Extension("tpyclblas", sources=["tpyclblas.pyx"],libraries=["OpenCL","clBLAS"])]
 
 )

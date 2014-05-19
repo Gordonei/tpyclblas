@@ -1,7 +1,7 @@
 =========
 tpyclblas
 =========
-The Thin Python clBLAS wrapper library is an extremely thin wrapper around the clBLAS library (https://github.com/clMathLibraries/clBLAS) using cython and pyopencl.
+The Thin Python clBLAS wrapper library is an extremely thin and incomplete wrapper around the clBLAS library (https://github.com/clMathLibraries/clBLAS) using cython and pyopencl.
 
 I found the excellent gpyfftlib code really helpful (https://github.com/geggo/gpyfft). Look at that if you want to see how to wrap clBLAS properly.
 
@@ -26,7 +26,9 @@ Dependencies
 Installation
 ------------
 * Clone/Download the repository
-* Run "sudo CFLAGS="-I<clBLAS package Installation location>/include" python setup.py install" in the directory. You can omit the sudo part of the command if you have write access to your python libraries directory.
+* Run "sudo CFLAGS="-I<clBLAS package Installation location>/include -L<clBLAS package Installation location>/lib<64>" python setup.py install" in the directory.
+    ** You can omit the sudo part of the command if you have write access to your python libraries directory.
+    ** You can also omit the 64 in the library path if you wish to build for 32 bit libraries
 
 Directory Contents
 ------------------
