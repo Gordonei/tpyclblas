@@ -68,7 +68,7 @@ cdef sgemmcwrapper(order,transA,transB,size_t M,size_t N,size_t K,cl_float alpha
 	return result
 
 def sgemvwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues):
-	return sgemvwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues)
+	return sgemvcwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues)
 
 cdef sgemvcwrapper(order,transA,size_t M,size_t N,cl_float alpha,A,size_t offA,size_t lda,x,size_t offx,int incx,cl_float beta,y,size_t offy,int incy,cl_uint numCommandQueues,commandQueues):
 	cdef clblasOrder blasorder = clblasRowMajor
@@ -80,7 +80,7 @@ cdef sgemvcwrapper(order,transA,size_t M,size_t N,cl_float alpha,A,size_t offA,s
 	cdef cl_mem memx = <cl_mem><voidptr_t>x.int_ptr
 	cdef cl_mem memy = <cl_mem><voidptr_t>y.int_ptr
 
-	cdef cl_command_queue queue = <cl_command_queue><voidptr_t>commandQueues.intptr
+	cdef cl_command_queue queue = <cl_command_queue><voidptr_t>commandQueues.int_ptr
 	
 	cdef cl_event kernel_event
 	cdef clblasStatus result = clblasSgemv(blasorder,transposeA,M,N,alpha,memA,offA,lda,memx,offx,incx,beta,memy,offy,incy,numCommandQueues,&queue,0,NULL,&kernel_event)
