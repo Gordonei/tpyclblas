@@ -27,6 +27,7 @@ cdef extern from "clBLAS.h":
     ctypedef unsigned int cl_uint
     ctypedef unsigned long int cl_ulong
     ctypedef float cl_float
+    ctypedef double cl_double
 
     ctypedef void* cl_context
     ctypedef void* cl_command_queue
@@ -124,7 +125,53 @@ cdef extern from "clBLAS.h":
     	cl_command_queue *commandQueues,
     	cl_uint numEventsInWaitList,
     	const cl_event *eventWaitList,
-    	cl_event *events)        
+    	cl_event *events)
+    
+    clblasStatus clblasDgemm(
+	clblasOrder order,
+        clblasTranspose transA,
+        clblasTranspose transB,
+        size_t M,
+        size_t N,
+        size_t K,
+        cl_double alpha,
+        const cl_mem A,
+        size_t offA,
+        size_t lda,
+        const cl_mem B,
+        size_t offB,
+        size_t ldb,
+        cl_double beta,
+        cl_mem C,
+        size_t offC,
+        size_t ldc,
+        cl_uint numCommandQueues,
+        cl_command_queue *commandQueues,
+        cl_uint numEventsInWaitList,
+        const cl_event *eventWaitList,
+        cl_event *events)
+
+    clblasStatus clblasDgemv(
+    	clblasOrder order,
+    	clblasTranspose transA,
+    	size_t M,
+    	size_t N,
+    	cl_double alpha,
+    	const cl_mem A,
+    	size_t offA,
+    	size_t lda,
+    	const cl_mem x,
+    	size_t offx,
+    	int incx,
+    	cl_double beta,
+    	cl_mem y,
+    	size_t offy,
+    	int incy,
+    	cl_uint numCommandQueues,
+    	cl_command_queue *commandQueues,
+    	cl_uint numEventsInWaitList,
+    	const cl_event *eventWaitList,
+    	cl_event *events) 
 
     clblasStatus clblasSetup()
     

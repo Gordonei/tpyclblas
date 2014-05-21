@@ -87,3 +87,48 @@ cdef sgemvcwrapper(order,transA,size_t M,size_t N,cl_float alpha,A,size_t offA,s
 	#clWaitForEvents(1,&kernel_event)
 
 	return result
+
+def dgemmwrapper(order,transA,transB,M,N,K,alpha,A,offA,lda,B,offB,ldb,beta,C,offC,ldc,numCommandQueues,commandQueues):
+	return dgemmcwrapper(order,transA,transB,M,N,K,alpha,A,offA,lda,B,offB,ldb,beta,C,offC,ldc,numCommandQueues,commandQueues)
+
+cdef dgemmcwrapper(order,transA,transB,size_t M,size_t N,size_t K,cl_double alpha,A,size_t offA,size_t lda,B,size_t offB,size_t ldb,cl_double beta,C,size_t offC,size_t ldc,cl_uint numCommandQueues,commandQueues):
+	cdef clblasOrder blasorder = clblasRowMajor
+
+	cdef clblasTranspose transposeA = clblasNoTrans
+	if(transA): transposeA = clblasTrans
+
+	cdef clblasTranspose transposeB = clblasNoTrans
+	if(transB): transposeB = clblasTrans
+
+	cdef cl_mem memA = <cl_mem><voidptr_t>A.int_ptr
+	cdef cl_mem memB = <cl_mem><voidptr_t>B.int_ptr
+	cdef cl_mem memC = <cl_mem><voidptr_t>C.int_ptr
+
+	cdef cl_command_queue queue = <cl_command_queue><voidptr_t>commandQueues.int_ptr
+
+	cdef cl_event kernel_event
+	cdef clblasStatus result  = clblasSgemm(blasorder,transposeA,transposeB,M,N,K,alpha,memA,offA,lda,memB,offB,ldb,beta,memC,offC,ldc,numCommandQueues,&queue,0,NULL,&kernel_event)
+	#clWaitForEvents(1,&kernel_event)
+
+	return result
+
+def dgemvwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues):
+	return dgemvcwrapper(order,transA,M,N,alpha,A,offA,lda,x,offx,incx,beta,y,offy,incy,numCommandQueues,commandQueues)
+
+cdef dgemvcwrapper(order,transA,size_t M,size_t N,cl_double alpha,A,size_t offA,size_t lda,x,size_t offx,int incx,cl_double beta,y,size_t offy,int incy,cl_uint numCommandQueues,commandQueues):
+	cdef clblasOrder blasorder = clblasRowMajor
+	
+	cdef clblasTranspose transposeA = clblasNoTrans
+	if(transA): transposeA = clblasTrans
+
+	cdef cl_mem memA = <cl_mem><voidptr_t>A.int_ptr
+	cdef cl_mem memx = <cl_mem><voidptr_t>x.int_ptr
+	cdef cl_mem memy = <cl_mem><voidptr_t>y.int_ptr
+
+	cdef cl_command_queue queue = <cl_command_queue><voidptr_t>commandQueues.int_ptr
+	
+	cdef cl_event kernel_event
+	cdef clblasStatus result = clblasSgemv(blasorder,transposeA,M,N,alpha,memA,offA,lda,memx,offx,incx,beta,memy,offy,incy,numCommandQueues,&queue,0,NULL,&kernel_event)
+	#clWaitForEvents(1,&kernel_event)
+
+	return result
