@@ -3,6 +3,8 @@ tpyclblas
 =========
 The Thin Python clBLAS wrapper library is an extremely thin and incomplete wrapper around the clBLAS library (https://github.com/clMathLibraries/clBLAS) using cython and pyopencl.
 
+tpyclblas has been tested on AMD CPUs, Nvidia GPUs and Intel CPUs using the respective platforms' SDKs.
+
 I found the excellent gpyfftlib code really helpful (https://github.com/geggo/gpyfft). Look at that if you want to see how to wrap clBLAS properly.
 
 Please feel free to contact me, Gordon Inggs at gordon <dot> inggs <at> gmail <dot> com, if you have any questions or even better, pull requests!
@@ -29,6 +31,7 @@ Installation
 * Run "sudo CFLAGS="-I<clBLAS package Installation location>/include -L<clBLAS package Installation location>/lib<64>" python setup.py install" in the directory.
     ** You can omit the sudo part of the command if you have write access to your python libraries directory.
     ** You can also omit the 64 in the library path if you wish to build for 32 bit libraries
+* Run "python tpyclblas_test.py" to make sure that the installation has been successful.
 
 Directory Contents
 ------------------
