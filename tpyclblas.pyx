@@ -139,3 +139,11 @@ cdef dgemvcwrapper(order,transA,size_t M,size_t N,cl_double alpha,A,size_t offA,
 	if(result): raise clblasException(result)
 
 	return pyopencl.Event.from_int_ptr(<long>kernel_event)
+
+def waitrelease(kernelEvent):
+	return waitreleasecwrapper(kernelEvent)
+
+cdef waitreleasecwrapper(kernelEvent):
+	cdef cl_event kernel_event = <cl_event><voidptr_t>kernelEvent.int_ptr
+	clWaitForEvents(1,&kernel_event)
+	clReleaseEvent(kernel_event)

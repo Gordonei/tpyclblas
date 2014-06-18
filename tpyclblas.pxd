@@ -179,3 +179,4 @@ cdef extern from "clBLAS.h":
 
     cl_int clWaitForEvents(cl_uint numEvents,const cl_event* event_list)
 
+    cl_int clReleaseEvent(cl_event event)
